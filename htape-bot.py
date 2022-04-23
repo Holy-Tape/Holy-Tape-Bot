@@ -96,7 +96,7 @@ def t_logger_event_handler():
 
     return {
         "utc_time": int(time.time()),
-        "put_m_period_s": 60
+        "put_m_period_s": 300
         }
 
 @app.route('/' + TOKEN, methods=['POST'])
