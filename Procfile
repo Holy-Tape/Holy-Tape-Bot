@@ -1,1 +1,1 @@
-web: export FLASK_APP=htape-bot && flask run 
+web: python3 htape-bot.py
