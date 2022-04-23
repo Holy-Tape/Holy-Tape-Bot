@@ -65,8 +65,11 @@ app = Flask(__name__)
 
 
 @app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
+def webhook():
+    bot.remove_webhook()
+    bot.set_webhook(url='https://htape-bot.herokuapp.com' + TOKEN)
+    return "!", 200
+
 
 @app.route("/we/button", methods=['GET', 'POST'])
 def button_event_handler():
@@ -95,4 +98,10 @@ def t_logger_event_handler():
         "put_m_period_s": 60
         }
 
-bot.polling()
+@app.route('/' + TOKEN, methods=['POST'])
+def getMessage():
+    json_string = request.get_data().decode('utf-8')
+    update = telebot.types.Update.de_json(json_string)
+    bot.process_new_updates([update])
+    return "!", 200
+
