@@ -8,6 +8,7 @@ import psycopg2
 
 DB_URL = os.environ.get('DATABASE_URL', None)
 TOKEN = os.environ.get('TOKEN', None)
+HKD_SUB = os.environ.get('HKD_SUB', None)
 
 # conn = psycopg2.connect(dbname='database', user='db_user', 
 #                         password='mypassword', host=DB_URL)
@@ -15,7 +16,7 @@ TOKEN = os.environ.get('TOKEN', None)
 
 bot = telebot.TeleBot(TOKEN)
 
-subscriptions_all = []
+subscriptions_all = [HKD_SUB]
 
 def make_measures_message(data):
     retval = None
@@ -106,4 +107,6 @@ def getMessage():
     return "!", 200
 
 if __name__ == "__main__":
+    bot.remove_webhook()
+    bot.set_webhook(url='https://htape-bot.herokuapp.com/' + TOKEN)
     app.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
