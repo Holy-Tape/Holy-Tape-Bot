@@ -8,7 +8,7 @@ import psycopg2
 
 DB_URL = os.environ.get('DATABASE_URL', None)
 TOKEN = os.environ.get('TOKEN', None)
-HKD_SUB = os.environ.get('HKD_SUB', None)
+HKD_SUB = [os.environ.get('HKD_SUB', None)]
 
 # conn = psycopg2.connect(dbname='database', user='db_user', 
 #                         password='mypassword', host=DB_URL)
@@ -16,7 +16,7 @@ HKD_SUB = os.environ.get('HKD_SUB', None)
 
 bot = telebot.TeleBot(TOKEN)
 
-subscriptions_all = [HKD_SUB]
+subscriptions_all = set(HKD_SUB)
 
 def make_measures_message(data):
     retval = None
@@ -45,7 +45,7 @@ def what_can_I_do():
     return possibilities
 
 def save_chat_id(id):
-    subscriptions_all.append(id)
+    subscriptions_all.add(id)
 
 @bot.message_handler(commands=['start', 'go'])
 def start_handler(message):
