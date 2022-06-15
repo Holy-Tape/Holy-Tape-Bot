@@ -131,7 +131,6 @@ def photo_handler():
                 if id is not '':
                     img = open(filepath, 'rb')
                     bot.send_photo(id, img)
-                    close(img)
             # Here we must send photo
             return 'Success\n', 200
     if request.method == 'GET':
