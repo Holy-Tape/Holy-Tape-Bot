@@ -10,6 +10,7 @@ DB_URL = os.environ.get('DATABASE_URL', None)
 TOKEN = os.environ.get('TOKEN', None)
 HKD_SUB = [os.environ.get('HKD_SUB', None)]
 
+last_photo = "No photo"
 # conn = psycopg2.connect(dbname='database', user='db_user', 
 #                         password='mypassword', host=DB_URL)
 # cursor = conn.cursor()
@@ -98,6 +99,14 @@ def t_logger_event_handler():
         "utc_time": int(time.time()),
         "put_m_period_s": 300
         }
+
+@app.route("/put-photo", methods=['GET', 'POST'])
+def photo_handler():
+    if request.method == 'POST':
+        print(request)
+        return 200
+    else if request.method == 'GET':
+        return last_photo, 200
 
 @app.route('/' + TOKEN, methods=['POST'])
 def getMessage():
