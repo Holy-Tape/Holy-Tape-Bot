@@ -104,7 +104,7 @@ def t_logger_event_handler():
 def photo_handler():
     if request.method == 'POST':
         print(request)
-        return 200
+        return "ok", 200
     if request.method == 'GET':
         return last_photo, 200
 
