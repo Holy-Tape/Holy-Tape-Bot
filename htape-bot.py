@@ -128,7 +128,8 @@ def photo_handler():
             file.save(filepath)
             img = open(filepath, 'rb')
             for id in subscriptions_all:
-                bot.send_photo(id, img)
+                if id is not '':
+                    bot.send_photo(id, img)
             # Here we must send photo
             return 'Success\n', 200
     if request.method == 'GET':
