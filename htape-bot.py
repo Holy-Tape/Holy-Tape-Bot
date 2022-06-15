@@ -105,7 +105,7 @@ def photo_handler():
     if request.method == 'POST':
         print(request)
         return 200
-    else if request.method == 'GET':
+    if request.method == 'GET':
         return last_photo, 200
 
 @app.route('/' + TOKEN, methods=['POST'])
