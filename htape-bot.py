@@ -129,7 +129,7 @@ def photo_handler():
             file.save(filepath)
             img = open(filepath, 'rb')
             for id in subscriptions_all:
-                if id is not '':
+                if id != '':
                     img = open(filepath, 'rb')
                     bot.send_photo(id, img)
             # Here we must send photo
