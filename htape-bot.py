@@ -115,7 +115,7 @@ def t_logger_event_handler():
 @app.route("/put-photo", methods=['GET', 'POST'])
 def photo_handler():
     if request.method == 'POST':
-        print('Request.data: ' + request.data)
+        print(request.data)
         if 'image' not in request.files:
             print('No file part')
             return 'No file part', 400
