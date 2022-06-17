@@ -1,3 +1,4 @@
+from fileinput import filename
 from flask import Flask
 from flask import request
 from werkzeug.utils import secure_filename
@@ -115,25 +116,21 @@ def t_logger_event_handler():
 @app.route("/put-photo", methods=['GET', 'POST'])
 def photo_handler():
     if request.method == 'POST':
-        print(request.data)
-        if 'image' not in request.files:
-            print('No file part')
-            return 'No file part', 400
-        file = request.files['image']
-        if file.filename == '':
-            print('No selected file')
-            return 'No selected file', 400
-        if file and allowed_file(file.filename):
-            last_photo = secure_filename(file.filename)
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], last_photo)
-            file.save(filepath)
-            img = open(filepath, 'rb')
+        if request.content_type == 'image/jpeg':
+            data = request.get_data()
+            filename = 'photo.jpg'
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            img = open(filepath, 'wb')
+            img.write(data)
+            img.close()
             for id in subscriptions_all:
                 if id != '':
                     img = open(filepath, 'rb')
                     bot.send_photo(id, img)
-            # Here we must send photo
             return 'Success\n', 200
+        else:
+            print('No file')
+            return 'No file part', 400
     if request.method == 'GET':
         return last_photo, 200
 
